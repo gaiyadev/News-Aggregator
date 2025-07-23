@@ -1,14 +1,5 @@
 import React from "react";
-
-type Option = string | { label: string; value: string };
-
-interface SelectFieldProps {
-  value: string;
-  options: Option[];
-  onChange: (value: string) => void;
-  className?: string;
-  placeholder?: string;
-}
+import type { SelectFieldProps } from "../interfaces/selectField";
 
 const SelectField: React.FC<SelectFieldProps> = ({
   value,
@@ -42,4 +33,4 @@ const SelectField: React.FC<SelectFieldProps> = ({
   );
 };
 
-export default SelectField;
+export default React.memo(SelectField);

@@ -1,12 +1,5 @@
 import React from "react";
-
-interface InputFieldProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-  type: string;
-}
+import type { InputFieldProps } from "../interfaces/inputField";
 
 const InputField: React.FC<InputFieldProps> = ({
   value,
@@ -26,4 +19,4 @@ const InputField: React.FC<InputFieldProps> = ({
   );
 };
 
-export default InputField;
+export default React.memo(InputField);

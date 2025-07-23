@@ -11,18 +11,18 @@ export const fetchTopHeadlines = async (
   let articles: any[] = [];
 
   if (!source || source === "newsapi") {
-    const newsApiArticles = await fetchNewsApi(query, category, from);
-    console.log({ newsApiArticles });
-    articles.push(
-      ...newsApiArticles.map((a: any) => ({
-        title: a.title,
-        url: a.url,
-        image: a.urlToImage,
-        description: a.description,
-        source: a.source?.name,
-        publishedAt: a.publishedAt,
-      }))
-    );
+    // const newsApiArticles = await fetchNewsApi(query, category, from);
+    // console.log({ newsApiArticles });
+    // articles.push(
+    //   ...newsApiArticles.map((a: any) => ({
+    //     title: a.title,
+    //     url: a.url,
+    //     image: a.urlToImage,
+    //     description: a.description,
+    //     source: a.source?.name,
+    //     publishedAt: a.publishedAt,
+    //   }))
+    // );
   }
 
   if (!source || source === "guardian") {
@@ -33,9 +33,9 @@ export const fetchTopHeadlines = async (
   }
 
   if (!source || source === "nyt") {
-    const nytArticles = await fetchNYTArticles();
-    console.log({ nytArticles });
-    articles.push(...nytArticles);
+    // const nytArticles = await fetchNYTArticles();
+    // console.log({ nytArticles });
+    // articles.push(...nytArticles);
   }
 
   return articles.sort(
