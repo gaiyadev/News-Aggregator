@@ -13,7 +13,6 @@ export const fetchTopHeadlines = async (
   if (!source || source === "newsapi") {
     const newsApiArticles = await fetchNewsApi(query, category, from);
     console.log({ newsApiArticles });
-
     articles.push(
       ...newsApiArticles.map((a: any) => ({
         title: a.title,

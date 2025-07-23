@@ -16,7 +16,8 @@ export const fetchNYTArticles = async () => {
     title: item.title,
     description: item.abstract,
     url: item.url,
-    urlToImage: item.media?.[0]?.["media-metadata"]?.[2]?.url || "",
-    source: { name: "NYT" },
+    image: item.media?.[0]?.["media-metadata"]?.[2]?.url || "",
+    source: "NYT",
+    publishedAt: item.published_date,
   }));
 };
