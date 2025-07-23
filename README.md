@@ -16,3 +16,6 @@ A modern news aggregator built with React, TypeScript, Tailwind CSS, and Docker.
 cp .env.example .env
 npm install
 npm run dev
+docker-compose up --build
+
+```
