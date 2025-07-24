@@ -1,1 +1,6 @@
-export const sources = ["All sources", "newsapi", "guardian", "nyt"];
+export const sources: Array<string> = [
+  "All sources",
+  "newsapi",
+  "guardian",
+  "nyt",
+];

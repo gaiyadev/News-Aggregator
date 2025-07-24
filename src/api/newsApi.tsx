@@ -10,14 +10,18 @@ export const newsApi = axios.create({
 });
 
 export const fetchNewsApi = async (query = "", category = "", from = "") => {
-  const res = await newsApi.get("/top-headlines", {
-    params: {
-      country: "us",
-      q: query,
-      category: category || undefined,
-      from: from || undefined,
-      pageSize: 100,
-    },
-  });
-  return res.data.articles;
+  try {
+    const res = await newsApi.get("/everything", {
+      params: {
+        q: query || category || "news",
+        from: from || undefined,
+        sortBy: "publishedAt",
+        pageSize: 100,
+        language: "en",
+      },
+    });
+    return res.data.articles;
+  } catch (error) {
+    throw error;
+  }
 };

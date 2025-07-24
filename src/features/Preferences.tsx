@@ -1,3 +1,5 @@
+import React from "react";
+import { fetchTopHeadlines } from "../api/fetchTopHeadlines";
 import { usePreferences } from "../hooks/usePreferences";
 import { categories } from "../utils/category";
 import { sources } from "../utils/sources";
@@ -5,11 +7,28 @@ import { sources } from "../utils/sources";
 const Preferences = () => {
   const { prefs, updatePrefs } = usePreferences();
 
-  const handleChange = (type: "sources" | "categories", value: string) => {
+  const handleChange = async (
+    type: "sources" | "categories",
+    value: string
+  ) => {
+    // Update preference state
     const updated = prefs[type].includes(value)
       ? prefs[type].filter((v) => v !== value)
       : [...prefs[type], value];
+
     updatePrefs({ [type]: updated });
+
+    try {
+      console.log({ value });
+      await fetchTopHeadlines(
+        "",
+        type === "categories" ? value : "",
+        "",
+        type === "sources" ? value : ""
+      );
+    } catch {
+      // Silently handle errors
+    }
   };
 
   return (
@@ -47,4 +66,4 @@ const Preferences = () => {
   );
 };
 
-export default Preferences;
+export default React.memo(Preferences);
