@@ -1,3 +1,4 @@
+import React from "react";
 import { fetchTopHeadlines } from "../api/fetchTopHeadlines";
 import { usePreferences } from "../hooks/usePreferences";
 import { categories } from "../utils/category";
@@ -65,4 +66,4 @@ const Preferences = () => {
   );
 };
 
-export default Preferences;
+export default React.memo(Preferences);

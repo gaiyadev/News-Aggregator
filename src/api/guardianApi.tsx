@@ -7,21 +7,25 @@ export const guardianApi = axios.create({
 });
 
 export const fetchGuardianArticles = async (query = "", from = "") => {
-  const res = await guardianApi.get("/search", {
-    params: {
-      q: query || undefined,
-      "from-date": from || undefined,
-      "api-key": GUARDIAN_API_KEY,
-      showFields: "thumbnail,headline,trailText,short-url,byline",
-      pageSize: 100,
-    },
-  });
-  return res.data.response.results.map((article: any) => ({
-    title: article.webTitle,
-    url: article.webUrl,
-    image: article.fields?.thumbnail,
-    description: article.fields?.trailText,
-    source: "The Guardian",
-    publishedAt: article.webPublicationDate,
-  }));
+  try {
+    const res = await guardianApi.get("/search", {
+      params: {
+        q: query || undefined,
+        "from-date": from || undefined,
+        "api-key": GUARDIAN_API_KEY,
+        showFields: "thumbnail,headline,trailText,short-url,byline",
+        pageSize: 100,
+      },
+    });
+    return res.data.response.results.map((article: any) => ({
+      title: article.webTitle,
+      url: article.webUrl,
+      image: article.fields?.thumbnail,
+      description: article.fields?.trailText,
+      source: "The Guardian",
+      publishedAt: article.webPublicationDate,
+    }));
+  } catch (error) {
+    throw error;
+  }
 };

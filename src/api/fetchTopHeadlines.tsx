@@ -1,6 +1,10 @@
+import { formatDate } from "../utils/dateFormater";
 import { fetchGuardianArticles } from "./guardianApi";
 import { fetchNewsApi } from "./newsApi";
 import { fetchNYTArticles } from "./nytApi";
+
+const DEFAULT_IMAGE =
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80";
 
 export const fetchTopHeadlines = async (
   query = "",
@@ -9,37 +13,58 @@ export const fetchTopHeadlines = async (
   source = ""
 ) => {
   let articles: any[] = [];
+  console.log({ category });
 
-  if (!source || source === "newsapi") {
-    const newsApiArticles = await fetchNewsApi(query, category, from);
-    console.log({ newsApiArticles });
+  if (!source || source === "All sources" || source === "nyt") {
+    const nytArticles = await fetchNYTArticles();
     articles.push(
-      ...newsApiArticles.map((a: any) => ({
+      ...nytArticles.map((a: any) => ({
         title: a.title,
         url: a.url,
-        image: a.urlToImage,
+        urlToImage: a.image || DEFAULT_IMAGE,
         description: a.description,
-        source: a.source?.name,
+        source: a.source,
         publishedAt: a.publishedAt,
       }))
     );
   }
 
-  if (!source || source === "guardian") {
+  if (!source || source === "All sources" || source === "guardian") {
     const guardianArticles = await fetchGuardianArticles(query, from);
-    console.log({ guardianArticles });
-
-    articles.push(...guardianArticles);
+    articles.push(
+      ...guardianArticles.map((a: any) => ({
+        title: a.title,
+        url: a.url,
+        urlToImage: a.image || DEFAULT_IMAGE,
+        description: a.description,
+        source: a.source,
+        publishedAt: a.publishedAt,
+      }))
+    );
   }
 
-  if (!source || source === "nyt") {
-    const nytArticles = await fetchNYTArticles();
-    console.log({ nytArticles });
-    articles.push(...nytArticles);
-  }
-
-  return articles.sort(
-    (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
+  // if (!source  || source ==='All sources'  || source === "newsapi") {
+  //   const newsApiArticles = await fetchNewsApi(query, category, from);
+  //   console.log({ newsApiArticles });
+  //   articles.push(
+  //     ...newsApiArticles.map((a: any) => ({
+  //       title: a.title,
+  //       url: a.url,
+  //       image: a.urlToImage || DEFAULT_IMAGE,
+  //       description: a.description,
+  //       source: a.source?.name,
+  //       publishedAt: a.publishedAt,
+  //     }))
+  //   );
+  // }
+  return articles;
+  // return articles
+  //   .sort(
+  //     (a, b) =>
+  //       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  //   )
+  //   .map((article) => ({
+  //     ...article,
+  //     publishedAt: formatDate(article.publishedAt),
+  //   }));
 };

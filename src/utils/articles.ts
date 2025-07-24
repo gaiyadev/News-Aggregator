@@ -1,8 +1,9 @@
-export type Props = {
+export type Article = {
   title: string;
   description: string;
   url: string;
   urlToImage?: string;
-  source: { name?: string } | string;
   publishedAt?: string;
+  source: { name?: string } | string;
+  // other fields...
 };

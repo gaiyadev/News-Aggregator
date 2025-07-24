@@ -6,9 +6,11 @@ import { sources } from "../utils/sources";
 import InputField from "../components/InputField";
 import SelectField from "../components/SelectField";
 import { useDebounce } from "../hooks/useDebounce";
+import type { Article } from "../utils/articles";
+import Loader from "./Loader";
 
 const NewsFeed = () => {
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [fromDate, setFromDate] = useState("");
@@ -30,9 +32,12 @@ const NewsFeed = () => {
 
         setArticles(data);
         setError(null);
+        localStorage.setItem("lastArticles", JSON.stringify(data)); // Cache
       } catch (error) {
         console.error("Error fetching headlines:", error);
         setError("Something went wrong. Please try again.");
+        const cached = localStorage.getItem("lastArticles");
+        if (cached) setArticles(JSON.parse(cached));
       } finally {
         setLoading(false);
       }
@@ -74,12 +79,7 @@ const NewsFeed = () => {
       </div>
 
       {loading ? (
-        <div className="text-center text-gray-500 py-10">
-          <div className="flex justify-center py-10">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-500"></div>
-          </div>
-          <span className="animate-pulse">Loading articles...</span>
-        </div>
+        <Loader />
       ) : error ? (
         <div className="text-center text-red-500 py-10">{error}</div>
       ) : (
@@ -87,7 +87,9 @@ const NewsFeed = () => {
           {articles.length ? (
             articles.map((article, i) => <ArticleCard key={i} {...article} />)
           ) : (
-            <p>No articles found.</p>
+            <p className="text-center text-gray-500 py-10">
+              No articles found. Try changing your filters.
+            </p>
           )}
         </div>
       )}
