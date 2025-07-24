@@ -1,6 +1,7 @@
 import React from "react";
 import type { Props } from "../types/article";
 import { formatDate } from "../utils/dateFormater";
+import { DEFAULT_IMAGE } from "../api/fetchTopHeadlines";
 
 const ArticleCard = ({
   title,
@@ -25,8 +26,7 @@ const ArticleCard = ({
           className="w-full h-48 object-cover mb-2 rounded"
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src =
-              "https://via.placeholder.com/400x200?text=No+Image";
+            e.currentTarget.src = DEFAULT_IMAGE;
           }}
         />
       )}
