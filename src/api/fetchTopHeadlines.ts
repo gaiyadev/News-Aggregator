@@ -12,7 +12,6 @@ export const fetchTopHeadlines = async (
   source = ""
 ) => {
   let articles: any[] = [];
-  console.log({ category });
 
   if (!source || source === "All sources" || source === "nyt") {
     const nytArticles = await fetchNYTArticles();
@@ -44,7 +43,6 @@ export const fetchTopHeadlines = async (
 
   if (!source || source === "All sources" || source === "newsapi") {
     const newsApiArticles = await fetchNewsApi(query, category, from);
-    console.log({ newsApiArticles });
     articles.push(
       ...newsApiArticles.map((a: any) => ({
         title: a.title,

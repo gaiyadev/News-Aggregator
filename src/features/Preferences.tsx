@@ -11,7 +11,6 @@ const Preferences = () => {
     type: "sources" | "categories",
     value: string
   ) => {
-    // Update preference state
     const updated = prefs[type].includes(value)
       ? prefs[type].filter((v) => v !== value)
       : [...prefs[type], value];
@@ -19,7 +18,6 @@ const Preferences = () => {
     updatePrefs({ [type]: updated });
 
     try {
-      console.log({ value });
       await fetchTopHeadlines(
         "",
         type === "categories" ? value : "",
