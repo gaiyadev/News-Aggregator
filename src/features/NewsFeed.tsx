@@ -34,7 +34,6 @@ const NewsFeed = () => {
         setError(null);
         localStorage.setItem("lastArticles", JSON.stringify(data)); // Cache
       } catch (error) {
-        console.error("Error fetching headlines:", error);
         setError("Something went wrong. Please try again.");
         const cached = localStorage.getItem("lastArticles");
         if (cached) setArticles(JSON.parse(cached));
