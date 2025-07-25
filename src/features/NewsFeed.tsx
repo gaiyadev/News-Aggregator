@@ -6,7 +6,7 @@ import { sources } from "../utils/sources";
 import InputField from "../components/InputField";
 import SelectField from "../components/SelectField";
 import { useDebounce } from "../hooks/useDebounce";
-import type { Article } from "../utils/articles";
+import type { Article } from "../types/articles";
 import Loader from "./Loader";
 
 const NewsFeed = () => {
