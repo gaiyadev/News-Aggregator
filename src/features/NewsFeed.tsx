@@ -8,6 +8,7 @@ import SelectField from "../components/SelectField";
 import { useDebounce } from "../hooks/useDebounce";
 import type { Article } from "../types/articles";
 import Loader from "./Loader";
+import { usePreferences } from "../hooks/usePreferences";
 
 const NewsFeed = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -18,6 +19,12 @@ const NewsFeed = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const debouncedSearch = useDebounce(search, 500); // 500ms delay
+  const { prefs } = usePreferences();
+
+  useEffect(() => {
+    if (prefs.categories.length) setCategory(prefs.categories[0]);
+    if (prefs.sources.length) setSource(prefs.sources[0]);
+  }, [prefs]);
 
   useEffect(() => {
     const fetchData = async () => {

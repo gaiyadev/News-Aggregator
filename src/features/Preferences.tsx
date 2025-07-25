@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fetchTopHeadlines } from "../api/fetchTopHeadlines";
 import { usePreferences } from "../hooks/usePreferences";
 import { categories } from "../utils/category";
@@ -6,6 +6,7 @@ import { sources } from "../utils/sources";
 
 const Preferences = () => {
   const { prefs, updatePrefs } = usePreferences();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = async (
     type: "sources" | "categories",
@@ -17,6 +18,8 @@ const Preferences = () => {
 
     updatePrefs({ [type]: updated });
 
+    setLoading(true); // Start loading
+
     try {
       await fetchTopHeadlines(
         "",
@@ -24,14 +27,22 @@ const Preferences = () => {
         "",
         type === "sources" ? value : ""
       );
-    } catch {
-      // Silently handle errors
+
+      // Optionally lift data up if you're managing articles here
+    } catch (err) {
+      console.error("Failed to fetch updated headlines", err);
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   return (
     <div className="p-4 bg-white rounded shadow mb-4">
       <h2 className="font-bold text-lg mb-2">Personalize Feed</h2>
+
+      {loading && (
+        <p className="text-blue-600 text-sm mb-2">Updating feed...</p>
+      )}
 
       <div className="mb-2">
         <p className="font-medium">Sources:</p>
