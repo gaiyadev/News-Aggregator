@@ -24,6 +24,7 @@ const NewsFeed = () => {
   useEffect(() => {
     if (prefs.categories.length) setCategory(prefs.categories[0]);
     if (prefs.sources.length) setSource(prefs.sources[0]);
+    console.log({ prefs });
   }, [prefs]);
 
   useEffect(() => {

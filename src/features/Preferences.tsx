@@ -18,7 +18,7 @@ const Preferences = () => {
 
     updatePrefs({ [type]: updated });
 
-    setLoading(true); 
+    setLoading(true);
     try {
       await fetchTopHeadlines(
         "",
@@ -26,11 +26,10 @@ const Preferences = () => {
         "",
         type === "sources" ? value : ""
       );
-
     } catch (err) {
       console.error("Failed to fetch updated headlines", err);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
